@@ -1,10 +1,14 @@
 class CommentsController < ApplicationController
 
   def create
-    comment = Comment.create(comment_params)
-    if comment.save
-      redirect_to  "/prototypes/#{comment.prototype.id}"
+    @comment = Comment.create(comment_params)#模範解答で@を追加
+    if @comment.save#模範解答で@を追加
+      redirect_to  "/prototypes/#{@comment.prototype.id}"
     else
+      #↓模範解答部分
+      @prototype = @comment.prototype
+      @comments = @prototype.comments
+      #↑模範解答部分
       render "prototypes/show"
     end
   end
